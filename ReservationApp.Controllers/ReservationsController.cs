@@ -28,11 +28,50 @@ namespace BookStoreApi.ReservationApp.Controllers
             return await _context.Reservations.ToListAsync();
         }
 
+        //[HttpGet("v2")]
+        //public async Task<ActionResult<IEnumerable<Reservation>>> GetReservations_v2()
+        //{
+        //    List<Reservation> reservations = await _context.Reservations.ToListAsync();
+            
+        //    return await _context.Reservations.ToListAsync();
+        //}
+
         // GET: api/Reservations/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Reservation>> GetReservation(int id)
         {
             var reservation = await _context.Reservations.FindAsync(id);
+
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+
+            return reservation;
+        }
+
+        [HttpGet("v2/{id}")]
+        public async Task<ActionResult<ReservationWithCustomerDTO>> GetReservation_v2(int id)
+        {
+            //var reservation = await _context.Reservations.FindAsync(id);
+            var reservation = await _context.Reservations
+        .Include(r => r.Customer)
+        .Where(r => r.ReservationID == id)
+        .Select(r => new ReservationWithCustomerDTO
+        {
+            ReservationID = r.ReservationID,
+            ReservationDate = r.ReservationDate,
+            Customer = new CustomerDTO
+            {
+                CustomerID = r.Customer.CustomerID,
+                FirstName = r.Customer.FirstName,
+                LastName = r.Customer.LastName,
+                Email = r.Customer.Email
+                // Map other necessary fields
+            }
+        })
+        .FirstOrDefaultAsync();
+
 
             if (reservation == null)
             {

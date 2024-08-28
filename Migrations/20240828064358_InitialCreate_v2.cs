@@ -5,7 +5,7 @@
 namespace BookStoreApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate_v3 : Migration
+    public partial class InitialCreate_v2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -22,6 +22,29 @@ namespace BookStoreApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BookStoreApi.ReservationApp.Models.BuffetTable", b =>
+                {
+                    b.Property<int>("TableID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TableID"));
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumberOfSeats")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TableNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("TableID");
+
+                    b.ToTable("Tables");
+                });
+
             modelBuilder.Entity("BookStoreApi.ReservationApp.Models.Customer", b =>
                 {
                     b.Property<int>("CustomerID")
@@ -84,48 +107,20 @@ namespace BookStoreApi.Migrations
 
             modelBuilder.Entity("BookStoreApi.ReservationApp.Models.ReservationTable", b =>
                 {
-                    b.Property<int>("ReservationTableID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReservationTableID"));
-
                     b.Property<int>("ReservationID")
                         .HasColumnType("int");
 
                     b.Property<int>("TableID")
                         .HasColumnType("int");
 
-                    b.HasKey("ReservationTableID");
+                    b.Property<int>("ReservationTableID")
+                        .HasColumnType("int");
 
-                    b.HasIndex("ReservationID");
+                    b.HasKey("ReservationID", "TableID");
 
                     b.HasIndex("TableID");
 
                     b.ToTable("ReservationTables");
-                });
-
-            modelBuilder.Entity("BookStoreApi.ReservationApp.Models.Table", b =>
-                {
-                    b.Property<int>("TableID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TableID"));
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfSeats")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TableNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("TableID");
-
-                    b.ToTable("Tables");
                 });
 
             modelBuilder.Entity("BookStoreApi.ReservationApp.Models.Reservation", b =>
@@ -142,13 +137,13 @@ namespace BookStoreApi.Migrations
             modelBuilder.Entity("BookStoreApi.ReservationApp.Models.ReservationTable", b =>
                 {
                     b.HasOne("BookStoreApi.ReservationApp.Models.Reservation", "Reservation")
-                        .WithMany()
+                        .WithMany("ReservationTables")
                         .HasForeignKey("ReservationID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BookStoreApi.ReservationApp.Models.Table", "Table")
-                        .WithMany()
+                    b.HasOne("BookStoreApi.ReservationApp.Models.BuffetTable", "Table")
+                        .WithMany("ReservationTables")
                         .HasForeignKey("TableID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -158,9 +153,19 @@ namespace BookStoreApi.Migrations
                     b.Navigation("Table");
                 });
 
+            modelBuilder.Entity("BookStoreApi.ReservationApp.Models.BuffetTable", b =>
+                {
+                    b.Navigation("ReservationTables");
+                });
+
             modelBuilder.Entity("BookStoreApi.ReservationApp.Models.Customer", b =>
                 {
                     b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("BookStoreApi.ReservationApp.Models.Reservation", b =>
+                {
+                    b.Navigation("ReservationTables");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,7 +15,7 @@ builder.Services.AddSingleton<BooksService>();
 //builder.Services.AddScoped<AuthService>();
 
 builder.Services.AddDbContext<ReservationContext>(options =>
-    options.UseSqlServer(@"Server=(LocalDb)\LocalDB;Database=ReservationDb_v2;Trusted_Connection=True;"));
+    options.UseSqlServer(@"Server=(localdb)\localDB1;Database=ReservationDb;Trusted_Connection=True;")); 
 
 builder.Services.AddControllers()
     .AddJsonOptions(

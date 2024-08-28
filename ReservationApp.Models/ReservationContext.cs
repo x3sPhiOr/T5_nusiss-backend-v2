@@ -10,18 +10,24 @@ namespace BookStoreApi.ReservationApp.Models
         }
 
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<Table> Tables { get; set; }
+        public DbSet<BuffetTable> Tables { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationTable> ReservationTables { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Replace with your actual SQL Server connection string
-            optionsBuilder.UseSqlServer(@"Server=(LocalDb)\LocalDB;Database=ReservationDb_v2;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\localDB1;Database=ReservationDb;Trusted_Connection=True;");
         }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
+        //    //Configure relationships
+        //        modelBuilder.Entity<Customer>()
+        //            .HasMany(c => c.Reservations)
+        //            .WithOne(r => r.Customer)
+        //            .HasForeignKey(r => r.CustomerID);
+
         //    modelBuilder.Entity<ReservationTable>()
         //        .HasKey(rt => new { rt.ReservationID, rt.TableID });
 
@@ -35,13 +41,39 @@ namespace BookStoreApi.ReservationApp.Models
         //        .WithMany(t => t.ReservationTables)
         //        .HasForeignKey(rt => rt.TableID);
         //}
+        //}
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    // Configure relationships
+        //    modelBuilder.Entity<Customer>()
+        //        .HasMany(c => c.Reservations)
+        //        .WithOne(r => r.Customer)
+        //        .HasForeignKey(r => r.CustomerID);
+        //}
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure relationships
+            // 1. Configure One-to-Many relationship: Customer to Reservations
             modelBuilder.Entity<Customer>()
                 .HasMany(c => c.Reservations)
                 .WithOne(r => r.Customer)
                 .HasForeignKey(r => r.CustomerID);
+                //.OnDelete(DeleteBehavior.Cascade);  // Optional: Cascade delete if customer is deleted
+
+            // 2. Configure Many-to-Many relationship: Reservations to Tables via ReservationTable
+            modelBuilder.Entity<ReservationTable>()
+                .HasKey(rt => new { rt.ReservationID, rt.TableID });  // Composite key
+
+            modelBuilder.Entity<ReservationTable>()
+                .HasOne(rt => rt.Reservation)
+                .WithMany(r => r.ReservationTables)
+                .HasForeignKey(rt => rt.ReservationID);
+
+            modelBuilder.Entity<ReservationTable>()
+                .HasOne(rt => rt.Table)
+                .WithMany(t => t.ReservationTables)
+                .HasForeignKey(rt => rt.TableID);
         }
     }
 }

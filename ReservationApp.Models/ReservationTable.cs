@@ -7,6 +7,6 @@
         public Reservation Reservation { get; set; }
 
         public int TableID { get; set; }
-        public Table Table { get; set; }
+        public BuffetTable Table { get; set; }
     }
 }

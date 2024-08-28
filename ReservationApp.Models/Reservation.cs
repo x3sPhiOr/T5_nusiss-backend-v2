@@ -18,8 +18,9 @@ namespace BookStoreApi.ReservationApp.Models
 
         public int CustomerID { get; set; }
         //[ForeignKey("CustomerID")]
+        // Navigation property
         public Customer Customer { get; set; }
-
-        //public ICollection<ReservationTable> ReservationTables { get; set; }
+        // Navigation property
+        public ICollection<ReservationTable> ReservationTables { get; set; }
     }
 }

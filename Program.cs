@@ -1,6 +1,7 @@
 using BookStoreApi.Models;
 using BookStoreApi.ReservationApp.Models;
 using BookStoreApi.Services;
+using BookStoreApi.Views;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -13,6 +14,10 @@ builder.Services.Configure<BookStoreDatabaseSettings>(
 
 builder.Services.AddSingleton<BooksService>();
 //builder.Services.AddScoped<AuthService>();
+
+builder.Services.AddRazorPages();
+
+builder.Services.AddHttpClient<ReservationModel>();
 
 builder.Services.AddDbContext<ReservationContext>(options =>
     options.UseSqlServer(@"Server=(LocalDb)\LocalDB;Database=ReservationDb_v2;Trusted_Connection=True;"));
@@ -61,9 +66,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+
+
+app.MapRazorPages();
+app.MapControllers();
+
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();

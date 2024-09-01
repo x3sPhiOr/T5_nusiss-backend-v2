@@ -1,0 +1,80 @@
+﻿@page
+@using BookStoreApi.Views
+@* @model ReservationApp.Models.Reservation *@
+@* @model ReservationApp.Data.ReservationDTO *@
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h2>Welcome to the Reservation App</h2>
+
+<ul>
+    <li><a asp-page="/BookNow">Book Now</a></li>
+    <li><a asp-page="/MyReservations">My Reservations</a></li>
+    <li><a asp-page="/UserProfile">User Profile</a></li>
+</ul>
+
+<h1>Book Reservations Now</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="NewReservation.ReservationDate">Reservation Date</label>
+        <input asp-for="NewReservation.ReservationDate" class="form-control" type="datetime-local" />
+        <span asp-validation-for="NewReservation.ReservationDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewReservation.Timing">Timing</label>
+        <input asp-for="NewReservation.Timing" class="form-control" />
+        <span asp-validation-for="NewReservation.Timing" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewReservation.NumberOfTables">Number of Tables</label>
+        <input asp-for="NewReservation.NumberOfTables" class="form-control" type="number" />
+        <span asp-validation-for="NewReservation.NumberOfTables" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewReservation.NumberOfSeats">Number of Seats</label>
+        <input asp-for="NewReservation.NumberOfSeats" class="form-control" type="number" />
+        <span asp-validation-for="NewReservation.NumberOfSeats" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewReservation.CustomerID">Customer ID</label>
+        <input asp-for="NewReservation.CustomerID" class="form-control" type="number" />
+        <span asp-validation-for="NewReservation.CustomerID" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Reservation</button>
+</form>
+
+<h2>Existing Reservations</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Reservation ID</th>
+            <th>Reservation Date</th>
+            <th>Timing</th>
+            <th>Number of Tables</th>
+            <th>Number of Seats</th>
+            <th>Customer ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model.Reservations)
+        {
+            <tr>
+                <td>@reservation.ReservationID</td>
+                <td>@reservation.ReservationDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@reservation.Timing</td>
+                <td>@reservation.NumberOfTables</td>
+                <td>@reservation.NumberOfSeats</td>
+                <td>@reservation.CustomerID</td>
+            </tr>
+        }
+    </tbody>
+</table>

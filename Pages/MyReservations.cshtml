@@ -1,0 +1,39 @@
+﻿@page
+@using BookStoreApi.Views
+@* @model ReservationApp.Models.Reservation *@
+@* @model ReservationApp.Data.ReservationDTO *@
+@model ReservationModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h2>Existing Reservations</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Reservation ID</th>
+            <th>Reservation Date</th>
+            <th>Timing</th>
+            <th>Number of Tables</th>
+            <th>Number of Seats</th>
+            <th>Customer ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model.Reservations)
+        {
+            <tr>
+                <td>@reservation.ReservationID</td>
+                <td>@reservation.ReservationDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@reservation.Timing</td>
+                <td>@reservation.NumberOfTables</td>
+                <td>@reservation.NumberOfSeats</td>
+                <td>@reservation.CustomerID</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<p>comment: after payment, can update / delete reservation ? </p>

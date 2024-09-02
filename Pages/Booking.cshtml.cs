@@ -6,12 +6,12 @@ using System.Text.Json;
 
 namespace BookStoreApi.Views
 {
-    public class IndexModel : PageModel
+    public class BookingModel : PageModel
     {
 
         private readonly HttpClient _httpClient;
 
-        public IndexModel(HttpClient httpClient)
+        public BookingModel(HttpClient httpClient)
         {
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri("https://localhost:7248/");

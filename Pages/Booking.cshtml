@@ -2,18 +2,10 @@
 @using BookStoreApi.Views
 @* @model ReservationApp.Models.Reservation *@
 @* @model ReservationApp.Data.ReservationDTO *@
-@model IndexModel
+@model BookingModel
 @{
     ViewData["Title"] = "Home";
 }
-
-<h2>Welcome to the Reservation App</h2>
-
-<ul>
-    <li><a asp-page="/BookNow">Book Now</a></li>
-    <li><a asp-page="/MyReservations">My Reservations</a></li>
-    <li><a asp-page="/UserProfile">User Profile</a></li>
-</ul>
 
 <h1>Book Reservations Now</h1>
 
@@ -47,9 +39,11 @@
         <input asp-for="NewReservation.CustomerID" class="form-control" type="number" />
         <span asp-validation-for="NewReservation.CustomerID" class="text-danger"></span>
     </div>
-
+    <br />
     <button type="submit" class="btn btn-primary">Add Reservation</button>
 </form>
+
+<p>comment: remove time from date picker</p>
 
 <h2>Existing Reservations</h2>
 

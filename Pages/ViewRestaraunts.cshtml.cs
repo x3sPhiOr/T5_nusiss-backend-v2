@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BookStoreApi.Pages
 {
-    public class PrivacyModel : PageModel
+    public class RestarauntsModel : PageModel
     {
-        private readonly ILogger<PrivacyModel> _logger;
+        private readonly ILogger<RestarauntsModel> _logger;
 
-        public PrivacyModel(ILogger<PrivacyModel> logger)
+        public RestarauntsModel(ILogger<RestarauntsModel> logger)
         {
             _logger = logger;
         }

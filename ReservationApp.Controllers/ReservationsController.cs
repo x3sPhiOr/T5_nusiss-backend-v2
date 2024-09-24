@@ -99,7 +99,8 @@ namespace BookStoreApi.ReservationApp.Controllers
             _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetReservation", new { id = reservation.ReservationID }, reservation);
+            CreatedAtAction("GetReservation", new { id = reservation.ReservationID }, reservation);
+            return Ok();
         }
 
         // DELETE: api/Reservations/5

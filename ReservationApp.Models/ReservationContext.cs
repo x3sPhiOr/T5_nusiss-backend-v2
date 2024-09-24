@@ -13,11 +13,13 @@ namespace BookStoreApi.ReservationApp.Models
         public DbSet<Table> Tables { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationTable> ReservationTables { get; set; }
+        public DbSet<PaymentRecord> PaymentRecords { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Replace with your actual SQL Server connection string
-            optionsBuilder.UseSqlServer(@"Server=(LocalDb)\LocalDB;Database=ReservationDb_v2;Trusted_Connection=True;");
+            //optionsBuilder.UseSqlServer(@"Server=(LocalDb)\LocalDB;Database=ReservationDb_v2;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Data Source=nusiss.cpku8mwo022g.ap-southeast-1.rds.amazonaws.com;Initial Catalog=NUSISS;User ID=admin;Password=eUbHxTz67UQjN3Rd3liD;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
         }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)

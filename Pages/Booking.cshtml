@@ -12,13 +12,20 @@
 <form method="post">
     <div class="form-group">
         <label asp-for="NewReservation.ReservationDate">Reservation Date</label>
-        <input asp-for="NewReservation.ReservationDate" class="form-control" type="datetime-local" />
+        <input asp-for="NewReservation.ReservationDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
         <span asp-validation-for="NewReservation.ReservationDate" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
+    @* <div class="form-group">
         <label asp-for="NewReservation.Timing">Timing</label>
         <input asp-for="NewReservation.Timing" class="form-control" />
+        <span asp-validation-for="NewReservation.Timing" class="text-danger"></span>
+    </div> *@
+    <div class="form-group">
+        <label asp-for="NewReservation.Timing">Timing</label>
+        <select asp-for="NewReservation.Timing" asp-items="Model.TimingOptions" id="timingDropdown" class="form-control">
+            <option value="">-- Select Timing --</option>
+        </select>
         <span asp-validation-for="NewReservation.Timing" class="text-danger"></span>
     </div>
 
@@ -42,6 +49,27 @@
     <br />
     <button type="submit" class="btn btn-primary">Add Reservation</button>
 </form>
+
+@* should remove breakfast option after 12pm *@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the current time
+        var now = new Date();
+        var currentHour = now.getHours();
+
+        // Get the dropdown element
+        var timingDropdown = document.getElementById("timingDropdown");
+
+        // Check if current time is past 12 PM
+        if (currentHour >= 12) {
+            // Remove "Morning" option if it's past 12 PM
+            var morningOption = Array.from(timingDropdown.options).find(option => option.value === "Morning");
+            if (morningOption) {
+                timingDropdown.removeChild(morningOption);
+            }
+        }
+    });
+</script>
 
 <p>comment: remove time from date picker</p>
 

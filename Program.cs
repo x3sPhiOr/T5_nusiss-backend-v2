@@ -19,8 +19,9 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddHttpClient<ReservationModel>();
 
+var connectionString = builder.Configuration.GetConnectionString("ReservationDb");
 builder.Services.AddDbContext<ReservationContext>(options =>
-    options.UseSqlServer(@"Server=(LocalDb)\LocalDB;Database=ReservationDb_v2;Trusted_Connection=True;"));
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddControllers()
     .AddJsonOptions(

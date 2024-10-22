@@ -2,6 +2,7 @@ using BookStoreApi.ReservationApp.Data;
 using BookStoreApi.ReservationApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.Json;
 
 namespace BookStoreApi.Views
@@ -16,6 +17,13 @@ namespace BookStoreApi.Views
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri("https://localhost:7248/");
 
+            TimingOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "Breakfast", Text = "Breakfast" },
+                new SelectListItem { Value = "Lunch", Text = "Lunch" },
+                new SelectListItem { Value = "Dinner", Text = "Dinner" },
+            };
+
         }
 
         //[BindProperty]
@@ -25,6 +33,8 @@ namespace BookStoreApi.Views
 
         public List<Reservation> Reservations { get; set; }
 
+        public List<SelectListItem> TimingOptions { get; set; }
+
         public async Task OnGetAsync()
         {
             var response = await _httpClient.GetStringAsync("https://localhost:7248/reservations");
@@ -32,6 +42,13 @@ namespace BookStoreApi.Views
             {
                 PropertyNameCaseInsensitive = true
             });
+
+            //TimingOptions = new List<SelectListItem>
+            //{
+            //    new SelectListItem { Value = "Breakfast", Text = "Breakfast" },
+            //    new SelectListItem { Value = "Lunch", Text = "Lunch" },
+            //    new SelectListItem { Value = "Dinner", Text = "Dinner" },
+            //};
         }
 
         public async Task<IActionResult> OnPostAsync()

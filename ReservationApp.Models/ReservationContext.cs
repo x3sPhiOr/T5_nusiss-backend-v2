@@ -14,11 +14,13 @@ namespace BookStoreApi.ReservationApp.Models
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationTable> ReservationTables { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            // Replace with your actual SQL Server connection string
-            optionsBuilder.UseSqlServer(@"Server=(LocalDb)\LocalDB;Database=ReservationDb_v2;Trusted_Connection=True;");
-        }
+        public DbSet<PaymentRecord> PaymentRecords { get; set; }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    // Replace with your actual SQL Server connection string
+        //    optionsBuilder.UseSqlServer(@"Server=(LocalDb)\LocalDB;Database=ReservationDb_v2;Trusted_Connection=True;");
+        //}
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{

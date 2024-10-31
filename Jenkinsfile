@@ -3,11 +3,11 @@ node {
     checkout scm
   }
   stage('SonarQube Analysis') {
-    def scannerHome = tool 'SonarQubeScanner'
+    def scannerHome = tool 'SonarScannerdotNET'
     withSonarQubeEnv() {
-      sh "dotnet /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarScannerdotNET/SonarScanner.MSBuild.dll begin /k:\"T5_nusiss-backend-v3\""
+      sh "dotnet ${scannerHome}\\SonarScanner.MSBuild.dll begin /k:\"T5_nusiss-backend-v3\""
       sh "dotnet build"
-      sh "dotnet /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarScannerdotNET/SonarScanner.MSBuild.dll end"
+      sh "dotnet ${scannerHome}\\SonarScanner.MSBuild.dll end"
     }
   }
 }
